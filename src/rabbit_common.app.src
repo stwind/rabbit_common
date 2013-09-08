@@ -1,0 +1,14 @@
+%% -*- mode: erlang -*-
+%% ex: ft=erlang ts=2 sw=2 et
+{application, rabbit_common,
+ [
+   {description, "RabbitMQ Common"},
+   {vsn, "3.1.5"},
+   {registered, []},
+   {applications, [
+       kernel,
+       stdlib
+     ]},
+   {mod, { rabbit_common_app, []}},
+   {env, []}
+ ]}.
