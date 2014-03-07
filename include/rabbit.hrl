@@ -105,6 +105,16 @@
 -define(DESIRED_HIBERNATE,         10000).
 -define(CREDIT_DISC_BOUND,   {2000, 500}).
 
+%% This is dictated by `erlang:send_after' on which we depend to implement TTL.
+-define(MAX_EXPIRY_TIMER, 4294967295).
+
 -define(INVALID_HEADERS_KEY, <<"x-invalid-headers">>).
 -define(ROUTING_HEADERS, [<<"CC">>, <<"BCC">>]).
 -define(DELETED_HEADER, <<"BCC">>).
+
+%% Trying to send a term across a cluster larger than 2^31 bytes will
+%% cause the VM to exit with "Absurdly large distribution output data
+%% buffer". So we limit the max message size to 2^31 - 10^6 bytes (1MB
+%% to allow plenty of leeway for the #basic_message{} and #content{}
+%% wrapping the message body).
+-define(MAX_MSG_SIZE, 2147383648).
